@@ -15,6 +15,8 @@
 				<h1>${greeting}</h1>
 				<p>${info}</p>
 			</div>
+			<a href="<c:url value="/j_spring_security_logout" />"
+				class="btn btn-danger btn-mini pull-right">logout</a>
 		</div>
 	</section>
 	<section class="container">

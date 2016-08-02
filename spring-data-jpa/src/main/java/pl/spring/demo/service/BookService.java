@@ -17,5 +17,4 @@ public interface BookService {
 	 * @return book with given id
 	 */
 	BookTo findBookById(Long id);
-	void deleteBookById(Long id);
 }

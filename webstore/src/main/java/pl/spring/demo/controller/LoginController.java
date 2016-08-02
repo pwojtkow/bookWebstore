@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.spring.demo.constants.ModelConstants;
 import pl.spring.demo.constants.ViewNames;
 
 @Controller
@@ -32,6 +33,8 @@ public class LoginController {
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public ModelAndView accesssDenied(Principal user) {
 		ModelAndView model = new ModelAndView();
+		model.addObject(ModelConstants.ERROR_MESSAGE, "Acces denied");
+		model.setViewName(ViewNames._403);
 		// TODO: implement mechanism redirecting to new custom page _403
 		// (consider extending informations by custom values)
 		return model;

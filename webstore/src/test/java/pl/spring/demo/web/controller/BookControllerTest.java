@@ -31,19 +31,20 @@ import pl.spring.demo.to.BookTo;
 
 /**
  * Book Controller tests
+ * 
  * @author PWOJTKOW
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BookControllerTest {
 
 	private MockMvc mockMvc;
-	
+
 	@Mock
 	private BookService bookService;
 
 	@InjectMocks
 	private BookController bookController;
-	
+
 	@Before
 	public void setup() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -53,21 +54,52 @@ public class BookControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(bookController).setViewResolvers(viewResolver).build();
 	}
 	
+// FIXME problem z tym testem
 //	@Test
-//	public void shouldShowAllBooksInDatabase() throws Exception  {
-//		//given 
+//	public void shouldShowAllBooksInDatabase() throws Exception {
+//		// given
 //		ResultActions resultActions = mockMvc.perform(get("/books/all"));
 //		List<BookTo> bookList = new ArrayList<BookTo>();
-//		BookTo firstBook = new BookTo(1L,"Pan Tadeusz", "Adam Mickiewicz", BookStatus.FREE);
+//		BookTo firstBook = new BookTo(1L, "Pan Tadeusz", "Adam Mickiewicz", BookStatus.FREE);
 //		BookTo secondBook = new BookTo(2L, "Nad Niemnem", "Eliza Orzekowa", BookStatus.LOAN);
-//		//when
+//		// when
 //		bookList.add(firstBook);
 //		bookList.add(secondBook);
 //		when(bookService.findAllBooks()).thenReturn(bookList);
 //		bookController.allBooks();
-//		//then
+//		// then
 //		resultActions.andExpect(view().name("books"))
-//			.andExpect(model().attribute(ModelConstants.BOOK_TITLE, "Pan Tadeusz"));
+//				.andExpect(model().attribute(ModelConstants.BOOK_TITLE, "Pan Tadeusz"));
 //	}
 
+	/**
+	 * Test should perform /books/all URL and get all bookList from List
+	 * @throws Exception when in database is no books
+	 */
+	@Test
+    public void testAllBooksInPage() throws Exception {
+        // given
+        List<BookTo> bookList = new ArrayList<BookTo>();
+        BookTo newBook = new BookTo();
+        // when
+        bookList.add(newBook);
+        when(bookService.findAllBooks()).thenReturn(bookList);
+        ResultActions resultActions = mockMvc.perform(get("/books/all"));
+        // then
+        resultActions.andExpect(view().name("books")).andExpect(model().attributeExists("bookList"))
+                .andExpect(model().attribute("bookList", bookList));
+    }
+	
+	@Test
+	public void testDeletingBookAsAdmin() throws Exception {
+		//given
+		List<BookTo> bookList = new ArrayList<>();
+		BookTo firstBook = new BookTo();
+		BookTo secondBook = new BookTo();
+		//when
+		bookList.add(firstBook);
+		bookList.add(secondBook);
+		ResultActions resultActions = mockMvc.perform(get("/books/delete"));
+	}
+	
 }

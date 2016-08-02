@@ -15,6 +15,9 @@
 				<h1>Error</h1>
 				<p>${errorMessage}</p>
 			</div>
+			<a href="<spring:url value="/" />" class="btn btn-default">
+				<span class="glyphicon-home glyphicon"></span> home
+			</a>
 		</div>
 	</section>
 </body>

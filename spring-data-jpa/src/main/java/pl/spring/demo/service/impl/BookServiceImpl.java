@@ -53,9 +53,4 @@ public class BookServiceImpl implements BookService {
 	public BookTo findBookById(Long id) {
 		return BookMapper.map(bookRepository.findBookById(id));
 	}
-
-	@Override
-	public void deleteBookById(Long id) {
-		bookRepository.deleteBookById(id);
-	}
 }

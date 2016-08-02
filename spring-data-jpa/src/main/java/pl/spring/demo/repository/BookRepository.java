@@ -17,7 +17,4 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     
     @Query("select book from BookEntity book where book.id like :id")
     public BookEntity findBookById(@Param("id") Long id);
-    
-    @Query("delete from BookEntity book where book.id like :id")
-    public void deleteBookById(@Param("id") Long id);
 }

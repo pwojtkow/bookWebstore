@@ -28,11 +28,10 @@
 					<strong>Wrote by</strong>: ${book.authors}
 				</p>
 				<p>
-					<a href="<spring:url value="/books" />" class="btn btn-default">
-						<span class="glyphicon-hand-left glyphicon"></span> back
-					</a>
+					<a href="<spring:url value="/" />" class="btn btn-default">
+				<span class="glyphicon-home glyphicon"></span> home
+			</a>
 				</p>
-
 			</div>
 		</div>
 	</section>

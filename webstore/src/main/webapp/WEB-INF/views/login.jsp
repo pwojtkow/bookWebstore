@@ -51,6 +51,9 @@
 						</form>
 					</div>
 				</div>
+				<a href="<spring:url value="/" />" class="btn btn-default">
+				<span class="glyphicon-home glyphicon"></span> home
+			</a>
 			</div>
 		</div>
 	</div>

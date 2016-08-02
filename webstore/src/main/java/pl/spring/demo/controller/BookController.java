@@ -3,10 +3,13 @@ package pl.spring.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.util.MetaAnnotationUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import pl.spring.demo.constants.ModelConstants;
 import pl.spring.demo.constants.ViewNames;
+import pl.spring.demo.dao.Dao;
+import pl.spring.demo.entity.BookEntity;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 
@@ -58,9 +63,28 @@ public class BookController {
 	@RequestMapping(value = "/delete")
 	public ModelAndView bookDelete(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject(ModelConstants.BOOK, bookService.findBookById(id));
-		bookService.deleteBookById(id);
+		BookTo foundBook = bookService.findBookById(id);
+		mav.addObject(ModelConstants.BOOK, foundBook);
+		bookService.deleteBook(id);
 		mav.setViewName(ViewNames.BOOK_DELETED);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public ModelAndView addBookForm() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("newBook", new BookTo());
+		mav.setViewName(ViewNames.ADD_BOOK);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public ModelAndView addBookToDatabase(@ModelAttribute ("newBook") BookTo newBook) {
+		ModelAndView mav = new ModelAndView();
+		bookService.saveBook(newBook);
+		mav.addObject(ModelConstants.GREETING, ModelConstants.WELCOME);
+		mav.addObject(ModelConstants.INFO, ModelConstants.INFO_TEXT);
+		mav.setViewName(ViewNames.WELCOME);
 		return mav;
 	}
 	// TODO: Implement GET / POST methods for "add book" functionality

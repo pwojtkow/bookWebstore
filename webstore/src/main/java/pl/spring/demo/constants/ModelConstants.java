@@ -22,4 +22,6 @@ public final class ModelConstants implements Serializable {
 	public static final String BOOK_AUTHORS = "book.authors";
 	public static final String BOOK_STATUS = "book.status";
 	public static final String BOOK_DELETED = "book.deleted";
+	public static final String INFO_TEXT = "Here You shall display information containing informations about newly created TO";
+	public static final String WELCOME = "This is a welcome page";
 }

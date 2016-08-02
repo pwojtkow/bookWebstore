@@ -58,6 +58,9 @@
 					<input type="submit" id="btnAdd" class="btn btn-primary"
 						value="Create" />
 				</div>
+				<a href="<spring:url value="/" />" class="btn btn-default">
+				<span class="glyphicon-home glyphicon"></span> home
+			</a>
 			</div>
 		</form:form>
 	</section>

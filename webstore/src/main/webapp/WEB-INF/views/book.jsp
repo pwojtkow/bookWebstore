@@ -29,7 +29,9 @@
 				</p>
 				<p>
 					<a href="<spring:url value="/books" />" class="btn btn-default">
-						<span class="glyphicon-hand-left glyphicon"></span> back
+						<span class="glyphicon glyphicon-arrow-left"></span> back
+					</a> <a href="<spring:url value="/" />" class="btn btn-default"> <span
+						class="glyphicon-home glyphicon"></span> home
 					</a>
 
 				</p>
