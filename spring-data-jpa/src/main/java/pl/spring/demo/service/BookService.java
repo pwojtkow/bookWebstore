@@ -1,5 +1,6 @@
 package pl.spring.demo.service;
 
+import pl.spring.demo.enumerations.BookStatus;
 import pl.spring.demo.to.BookTo;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface BookService {
 	 * @return book with given id
 	 */
 	BookTo findBookById(Long id);
+	List<BookTo> findBooksByAllFields(String title, String authors, BookStatus status);
 }

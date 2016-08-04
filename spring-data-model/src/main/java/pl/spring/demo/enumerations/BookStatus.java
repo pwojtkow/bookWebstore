@@ -9,4 +9,10 @@ package pl.spring.demo.enumerations;
 public enum BookStatus {
 
 	FREE, LOAN, MISSING
+
+	
+	
+	
+	
+	
 }

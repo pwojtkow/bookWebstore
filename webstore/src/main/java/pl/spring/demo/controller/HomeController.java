@@ -1,5 +1,8 @@
 package pl.spring.demo.controller;
 
+import static pl.spring.demo.constants.MessagesConstants.INFO_TEXT;
+import static pl.spring.demo.constants.MessagesConstants.WELCOME;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +16,8 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String welcome(Model model) {
-		model.addAttribute(ModelConstants.GREETING, ModelConstants.WELCOME);
-		model.addAttribute(ModelConstants.INFO, ModelConstants.INFO_TEXT);
+		model.addAttribute(ModelConstants.GREETING, WELCOME);
+		model.addAttribute(ModelConstants.INFO, INFO_TEXT);
 		return ViewNames.WELCOME;
 	}
 }

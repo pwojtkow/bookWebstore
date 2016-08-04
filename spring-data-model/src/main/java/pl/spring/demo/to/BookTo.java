@@ -18,6 +18,12 @@ public class BookTo {
         this.setStatus(status);
     }
 
+    public BookTo(String title, String authors, BookStatus status) {
+        this.title = title;
+        this.authors = authors;
+        this.setStatus(status);
+    }
+    
     public Long getId() {
         return id;
     }
