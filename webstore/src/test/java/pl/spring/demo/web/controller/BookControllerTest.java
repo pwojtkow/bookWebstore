@@ -53,24 +53,6 @@ public class BookControllerTest {
 
 		mockMvc = MockMvcBuilders.standaloneSetup(bookController).setViewResolvers(viewResolver).build();
 	}
-	
-// FIXME problem z tym testem
-//	@Test
-//	public void shouldShowAllBooksInDatabase() throws Exception {
-//		// given
-//		ResultActions resultActions = mockMvc.perform(get("/books/all"));
-//		List<BookTo> bookList = new ArrayList<BookTo>();
-//		BookTo firstBook = new BookTo(1L, "Pan Tadeusz", "Adam Mickiewicz", BookStatus.FREE);
-//		BookTo secondBook = new BookTo(2L, "Nad Niemnem", "Eliza Orzekowa", BookStatus.LOAN);
-//		// when
-//		bookList.add(firstBook);
-//		bookList.add(secondBook);
-//		when(bookService.findAllBooks()).thenReturn(bookList);
-//		bookController.allBooks();
-//		// then
-//		resultActions.andExpect(view().name("books"))
-//				.andExpect(model().attribute(ModelConstants.BOOK_TITLE, "Pan Tadeusz"));
-//	}
 
 	/**
 	 * Test should perform /books/all URL and get all bookList from List
@@ -99,7 +81,7 @@ public class BookControllerTest {
 		//when
 		bookList.add(firstBook);
 		bookList.add(secondBook);
-		ResultActions resultActions = mockMvc.perform(get("/books/delete"));
+		mockMvc.perform(get("/books/delete"));
 	}
 	
 }

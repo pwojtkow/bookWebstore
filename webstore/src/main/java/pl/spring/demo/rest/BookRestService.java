@@ -25,25 +25,10 @@ import pl.spring.demo.to.BookTo;
 @ResponseBody
 public class BookRestService {
 
+	// TODO dodac walidacje wartosci przed wejsciem do metody
+
 	@Autowired
 	BookService bookService;
-
-	/**
-	 * Method add book with "FREE" book status
-	 * 
-	 * @param title
-	 *            - title of book to add
-	 * @param authors
-	 *            - authors of book to add
-	 * @return - book transfer object that has been added and http status "OK"
-	 */
-	@RequestMapping(value = "/rest/books/addFree", method = RequestMethod.PUT)
-	public ResponseEntity<BookTo> addFreeBook(@RequestParam("title") String title,
-			@RequestParam("authors") String authors) {
-		BookTo currentBook = new BookTo(title, authors, BookStatus.FREE);
-		bookService.saveBook(currentBook);
-		return new ResponseEntity<BookTo>(currentBook, HttpStatus.OK);
-	}
 
 	/**
 	 * Method returns all books in database
@@ -80,25 +65,17 @@ public class BookRestService {
 	}
 
 	/**
-	 * Method add book to database
+	 * Method add new book to database
 	 * 
-	 * @param title
-	 *            - title of book to add
-	 * @param authors
-	 *            - authors of book to add
-	 * @param status
-	 *            - status of book to add ("FREE","LOAN","MISSING")
-	 * @return -
+	 * @param bookTo
+	 *            - book transfer object with parameters to add to database
+	 * @return - book transfer object that was added to database and http status
+	 *         "CREATED"
 	 */
 	@RequestMapping(value = "/rest/books/add", method = RequestMethod.PUT)
-	public ResponseEntity<BookTo> addBook(@RequestParam("title") String title, @RequestParam("authors") String authors,
-			@RequestParam("status") String status) {
-
-		BookStatus bookStatus = BookStatus.valueOf(status.toUpperCase());
-		BookTo bookToAdd = new BookTo(title, authors, bookStatus);
-		bookService.saveBook(bookToAdd);
-
-		return new ResponseEntity<BookTo>(bookToAdd, HttpStatus.CREATED);
+	public ResponseEntity<BookTo> addBook(BookTo bookTo) {
+		bookService.saveBook(bookTo);
+		return new ResponseEntity<BookTo>(bookTo, HttpStatus.CREATED);
 	}
 
 	/**
@@ -136,32 +113,14 @@ public class BookRestService {
 	}
 
 	/**
-	 * Method edits parameters of book in database
+	 * Method edits book from database
 	 * 
-	 * @param id
-	 *            - book id to change
-	 * @param title
-	 *            - new title of book
-	 * @param authors
-	 *            - new authors of book
-	 * @param status
-	 *            - new status of book ("FREE", "LOAN", "MISSING")
-	 * @return - book transfer object with changed parameters and http status
-	 *         "OK" when everything went good, or http status "NOT_FOUND" when
-	 *         book not found in database
+	 * @param bookTo - book transfer object with data to update
+	 * @return - book transfer object with changed parameters and http status "OK"
 	 */
 	@RequestMapping(value = "/rest/books/edit", method = RequestMethod.PUT)
-	public ResponseEntity<BookTo> editBook(@RequestParam("id") Long id, @RequestParam("title") String title,
-			@RequestParam("authors") String authors, @RequestParam("status") String status) {
-		BookTo book = bookService.findBookById(id);
-		if (book == null) {
-			return new ResponseEntity<BookTo>(HttpStatus.NOT_FOUND);
-		}
-		book.setTitle(title);
-		book.setAuthors(authors);
-		book.setStatus(BookStatus.valueOf(BookStatus.class, status.toUpperCase()));
-		bookService.saveBook(book);
-		return new ResponseEntity<BookTo>(book, HttpStatus.OK);
+	public ResponseEntity<BookTo> editBook(BookTo bookTo) {
+		bookService.saveBook(bookTo);
+		return new ResponseEntity<BookTo>(bookTo, HttpStatus.OK);
 	}
-
 }
