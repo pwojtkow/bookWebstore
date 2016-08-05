@@ -2,6 +2,7 @@ package pl.spring.demo.rest;
 
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pl.spring.demo.enumerations.BookStatus;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 
@@ -24,8 +24,6 @@ import pl.spring.demo.to.BookTo;
 @Controller
 @ResponseBody
 public class BookRestService {
-
-	// TODO dodac walidacje wartosci przed wejsciem do metody
 
 	@Autowired
 	BookService bookService;
@@ -40,9 +38,6 @@ public class BookRestService {
 	@RequestMapping(value = "/rest/books", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<BookTo>> getAllBooks() {
 		List<BookTo> allBooks = bookService.findAllBooks();
-		if (allBooks.isEmpty()) {
-			return new ResponseEntity<List<BookTo>>(HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<List<BookTo>>(allBooks, HttpStatus.OK);
 	}
 
@@ -56,14 +51,24 @@ public class BookRestService {
 	 *         with this id in database
 	 */
 	@RequestMapping(value = "/rest/books/book", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BookTo> getBookById(@RequestParam("id") Long id) {
+	public ResponseEntity<BookTo> getBookById(@NonNull @RequestParam("id") Long id) {
 		BookTo book = bookService.findBookById(id);
-		if (book == null) {
-			return new ResponseEntity<BookTo>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<BookTo>(book, HttpStatus.OK);
 	}
 
+	/**
+	 * Method finds all books with specific argument (when no argument, should be marked as "")
+	 * 
+	 * @param book - book transfer object with params to find
+	 * @return - list of book transfer objects that was found in database, according to params and http status
+	 *         "OK"
+	 */
+	@RequestMapping(value = "/rest/books/find", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<BookTo>> getBookByAttributes(BookTo book) {
+		List<BookTo> foundBookList = bookService.findBooksByAllFields(book.getTitle(), book.getAuthors(), book.getStatus());
+		return new ResponseEntity<List<BookTo>>(foundBookList, HttpStatus.OK);
+	}
+	
 	/**
 	 * Method add new book to database
 	 * 
@@ -73,7 +78,7 @@ public class BookRestService {
 	 *         "CREATED"
 	 */
 	@RequestMapping(value = "/rest/books/add", method = RequestMethod.PUT)
-	public ResponseEntity<BookTo> addBook(BookTo bookTo) {
+	public ResponseEntity<BookTo> addBook(@NonNull BookTo bookTo) {
 		bookService.saveBook(bookTo);
 		return new ResponseEntity<BookTo>(bookTo, HttpStatus.CREATED);
 	}
@@ -88,11 +93,8 @@ public class BookRestService {
 	 *         when database has not book with this id
 	 */
 	@RequestMapping(value = "/rest/books/delete", method = RequestMethod.DELETE)
-	public ResponseEntity<BookTo> deleteBook(@RequestParam("id") Long id) {
+	public ResponseEntity<BookTo> deleteBook(@NonNull @RequestParam("id") Long id) {
 		BookTo book = bookService.findBookById(id);
-		if (book == null) {
-			return new ResponseEntity<BookTo>(HttpStatus.NOT_FOUND);
-		}
 		bookService.deleteBook(id);
 		return new ResponseEntity<BookTo>(book, HttpStatus.OK);
 	}
@@ -106,10 +108,11 @@ public class BookRestService {
 	@RequestMapping(value = "/rest/books/deleteAll", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteAllBooks() {
 		List<BookTo> allBooks = bookService.findAllBooks();
-		for (BookTo book : allBooks) {
+		for(BookTo book : allBooks) {
 			bookService.deleteBook(book.getId());
 		}
-		return new ResponseEntity<String>("All books deleted", HttpStatus.OK);
+		String booksDeletedMessage = "All books deleted";
+		return new ResponseEntity<String>(booksDeletedMessage, HttpStatus.OK);
 	}
 
 	/**
@@ -119,7 +122,7 @@ public class BookRestService {
 	 * @return - book transfer object with changed parameters and http status "OK"
 	 */
 	@RequestMapping(value = "/rest/books/edit", method = RequestMethod.PUT)
-	public ResponseEntity<BookTo> editBook(BookTo bookTo) {
+	public ResponseEntity<BookTo> editBook(@NonNull BookTo bookTo) {
 		bookService.saveBook(bookTo);
 		return new ResponseEntity<BookTo>(bookTo, HttpStatus.OK);
 	}
