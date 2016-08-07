@@ -15,6 +15,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.spring.demo.constants.ModelConstants;
 import pl.spring.demo.controller.HomeController;
 
+/**
+ * Home controller test
+ * @author PWOJTKOW
+ */
 public class HomeControllerTest {
 
 	private MockMvc mockMvc;

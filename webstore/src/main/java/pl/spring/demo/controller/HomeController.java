@@ -14,6 +14,11 @@ import pl.spring.demo.constants.ViewNames;
 public class HomeController {
 
 
+	/**
+	 * Method gives welcome view
+	 * @param model - model class with parameters to set in view
+	 * @return view "WELCOME" name
+	 */
 	@RequestMapping("/")
 	public String welcome(Model model) {
 		model.addAttribute(ModelConstants.GREETING, WELCOME);

@@ -5,7 +5,6 @@ package pl.spring.demo.web.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -23,9 +22,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import pl.spring.demo.constants.ModelConstants;
 import pl.spring.demo.controller.BookController;
-import pl.spring.demo.enumerations.BookStatus;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 

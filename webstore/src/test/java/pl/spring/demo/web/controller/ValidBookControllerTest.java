@@ -61,6 +61,10 @@ public class ValidBookControllerTest {
 		ReflectionTestUtils.setField(bookController, "bookService", bookService);
 	}
 
+	/**
+	 * Test should gives add book page
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testAddBookPage() throws Exception {
 		// given
@@ -78,6 +82,10 @@ public class ValidBookControllerTest {
 				}));
 	}
 
+	/**
+	 * Test should gives book details page
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testBookDetailsPage() throws Exception {
 		// given
@@ -96,6 +104,10 @@ public class ValidBookControllerTest {
 				}));
 	}
 
+	/**
+	 * Test should return error page when empty field in add book action
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testAddBookWithEmptyFields() throws Exception {
 		// given
@@ -107,6 +119,10 @@ public class ValidBookControllerTest {
 		resultActions.andExpect(view().name("403")).andExpect(model().attribute("errorMessage", errorMessage));
 	}
 
+	/**
+	 * Test should search book using all fields
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testSearchUsingAllFields() throws Exception {
 		// given
@@ -129,6 +145,10 @@ public class ValidBookControllerTest {
 				}));
 	}
 
+	/**
+	 * Test should find book using only one field
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testSearchUsingOneField() throws Exception {
 		// given
@@ -151,6 +171,10 @@ public class ValidBookControllerTest {
 				}));
 	}
 
+	/**
+	 * Test should find book when in field was given not full name of title
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testSearchUsingNotFullName() throws Exception {
 		// given
@@ -196,6 +220,10 @@ public class ValidBookControllerTest {
 		verify(bookService, times(1)).deleteBook(Mockito.anyLong());
 	}
 
+	/**
+	 * Test should gives all books page
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testAllBooksPage() throws Exception {
 		// given
@@ -218,6 +246,10 @@ public class ValidBookControllerTest {
 				}));
 	}
 
+	/**
+	 * Test should gives view add book page when invoke method type GET
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testAddBookPageMethodGet() throws Exception {
 		// given
@@ -227,6 +259,10 @@ public class ValidBookControllerTest {
 		resultActions.andExpect(view().name("addBook"));
 	}
 
+	/**
+	 * Test should give view "search" name
+	 * @throws Exception when unable to gives view
+	 */
 	@Test
 	public void testSearchPage() throws Exception {
 		// given
